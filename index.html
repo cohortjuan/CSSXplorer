@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CSS Layout Lab — Flexbox</title>
+<title>CSS Layout Lab — Flexbox & Grid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ─── RESET ─────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --bg: #0b1020;
-  --card: #121a2a;
-  --text: #eaf1ff;
+  --bg:    #0b1020;
+  --card:  #121a2a;
+  --text:  #eaf1ff;
   --muted: #7f8aa3;
-  --blue: #4aa3ff;
+  --blue:  #4aa3ff;
   --green: #3ef0a8;
 }
 
@@ -24,13 +27,9 @@ body {
   padding: 40px 20px;
   min-height: 100vh;
 }
+.container { max-width: 1200px; margin: 0 auto; }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Header */
+/* ─── HEADER ─────────────────────────────── */
 .header {
   margin-bottom: 60px;
   background: linear-gradient(135deg, #1e4bd8 0%, #121a2a 100%);
@@ -40,24 +39,16 @@ body {
   overflow: hidden;
   border: 1px solid #3b6ef5;
 }
-
 .header::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(58, 110, 245, 0.2), transparent);
+  top: -50%; right: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(58,110,245,0.2), transparent);
   border-radius: 50%;
   z-index: 0;
 }
-
-.header-content {
-  position: relative;
-  z-index: 1;
-}
-
+.header-content { position: relative; z-index: 1; }
 h1 {
   font-size: 3.2rem;
   margin-bottom: 12px;
@@ -68,15 +59,14 @@ h1 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 .subtitle {
-  color: rgba(234, 241, 255, 0.8);
+  color: rgba(234,241,255,0.8);
   font-size: 1.1rem;
   font-weight: 500;
-  max-width: 500px;
+  max-width: 540px;
 }
 
-/* Tabs */
+/* ─── TABS ───────────────────────────────── */
 .tabs {
   display: flex;
   gap: 16px;
@@ -84,29 +74,19 @@ h1 {
   border-bottom: 1px solid #1e2a44;
   padding-bottom: 16px;
 }
-
 .tab-btn {
-  background: none;
-  border: none;
+  background: none; border: none;
   color: var(--muted);
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 16px;
+  font-size: 1rem; font-weight: 500;
+  cursor: pointer; padding: 8px 16px;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
+  margin-bottom: -18px;
 }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tab-btn:hover  { color: var(--text); }
 
-.tab-btn.active {
-  color: var(--blue);
-  border-bottom-color: var(--blue);
-}
-
-.tab-btn:hover {
-  color: var(--text);
-}
-
-/* Main layout */
+/* ─── MAIN GRID ──────────────────────────── */
 .lab-content {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -114,25 +94,21 @@ h1 {
   margin-bottom: 40px;
 }
 
-/* Preview */
+/* ─── PREVIEW ────────────────────────────── */
 .preview-section {
   background: var(--card);
   border: 1px solid #1e2a44;
   border-radius: 12px;
   padding: 40px;
-  min-height: 400px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
 }
-
 .preview-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.75rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
   margin-bottom: 20px;
 }
-
 .preview-container {
   flex: 1;
   background: #0f1626;
@@ -140,21 +116,15 @@ h1 {
   border-radius: 8px;
   padding: 20px;
   display: flex;
-  /* flex properties applied dynamically */
 }
-
 .preview-item {
-  background: var(--green);
-  color: #000;
-  padding: 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  min-width: 80px;
-  text-align: center;
-  flex-shrink: 0;
+  background: var(--green); color: #000;
+  padding: 16px; border-radius: 6px;
+  font-weight: 600; min-width: 70px;
+  text-align: center; flex-shrink: 0;
 }
 
-/* Controls */
+/* ─── CONTROLS ───────────────────────────── */
 .controls {
   background: var(--card);
   border: 1px solid #1e2a44;
@@ -162,311 +132,347 @@ h1 {
   padding: 24px;
   height: fit-content;
 }
-
-.control-group {
-  margin-bottom: 24px;
-}
-
-.control-group:last-child {
-  margin-bottom: 0;
-}
-
+.control-group { margin-bottom: 24px; }
+.control-group:last-child { margin-bottom: 0; }
 .control-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-  display: block;
-  font-weight: 600;
+  font-size: 0.75rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 8px; display: block; font-weight: 600;
 }
-
 select, input[type="range"] {
-  width: 100%;
-  padding: 8px 12px;
+  width: 100%; padding: 8px 12px;
   background: #0f1626;
   border: 1px solid #2a3a5a;
   border-radius: 6px;
-  color: var(--text);
-  font-size: 0.9rem;
-  cursor: pointer;
+  color: var(--text); font-size: 0.9rem; cursor: pointer;
+  font-family: 'Space Mono', monospace;
 }
+select:hover, input[type="range"]:hover { border-color: var(--blue); }
+.range-value { font-size: 0.8rem; color: var(--blue); margin-top: 4px; text-align: right; font-family: 'Space Mono', monospace; }
 
-select:hover, input[type="range"]:hover {
-  border-color: var(--blue);
-}
-
-.range-value {
-  font-size: 0.8rem;
-  color: var(--blue);
-  margin-top: 4px;
-  text-align: right;
-}
-
-/* Code output */
+/* ─── CODE OUTPUT ─────────────────────────── */
 .code-section {
   background: var(--card);
   border: 1px solid #1e2a44;
   border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 40px;
+  padding: 24px; margin-bottom: 40px;
 }
-
 .code-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.75rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
   margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
 }
-
 .copy-btn {
-  background: var(--blue);
-  color: #fff;
-  border: none;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: var(--blue); color: #fff; border: none;
+  padding: 4px 12px; border-radius: 4px;
+  font-size: 0.7rem; cursor: pointer; transition: opacity 0.2s;
 }
-
-.copy-btn:hover {
-  opacity: 0.8;
-}
-
+.copy-btn:hover { opacity: 0.8; }
 .code-output {
   background: #0f1626;
   border: 1px solid #2a3a5a;
-  border-radius: 8px;
-  padding: 16px;
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--green);
-  overflow-x: auto;
-  white-space: pre;
+  border-radius: 8px; padding: 16px;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: 0.85rem; line-height: 1.6;
+  color: var(--green); overflow-x: auto; white-space: pre;
 }
 
-/* Les mascot */
-.les {
+/* ════════════════════════════════════════════
+   JAVA — CSS ART MASCOT
+   ════════════════════════════════════════════ */
+.java-widget {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 40px; right: 40px;
   background: var(--card);
-  border: 3px solid var(--blue);
+  border: 2.5px solid var(--blue);
   border-radius: 20px;
-  padding: 24px;
-  max-width: 280px;
+  padding: 20px 20px 16px;
+  width: 244px;
   z-index: 100;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 40px rgba(74, 163, 255, 0.2);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  box-shadow: 0 10px 40px rgba(74,163,255,0.18);
 }
-
-.les.hidden {
+.java-widget.hidden {
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
 }
 
-.les-character {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 16px;
+.java-show-btn {
+  position: fixed;
+  bottom: 40px; right: 40px;
+  width: 46px; height: 46px;
+  background: var(--blue);
+  border: none; border-radius: 50%;
+  color: #fff; font-size: 1rem;
+  cursor: pointer; display: none; z-index: 100;
+  box-shadow: 0 4px 18px rgba(74,163,255,0.45);
+  transition: transform 0.2s ease;
+}
+.java-show-btn:hover { transform: scale(1.1); }
+
+@keyframes jv-float {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-6px); }
+}
+
+.java-char-area { display: flex; justify-content: center; margin-bottom: 10px; }
+.java-char {
   position: relative;
-  height: 120px;
-  perspective: 1000px;
+  width: 160px;
+  height: 220px;
+  animation: jv-float 3.8s ease-in-out infinite;
 }
 
-.les-symbol {
-  font-size: 5.5rem;
-  font-weight: 900;
-  line-height: 1;
-  background: linear-gradient(135deg, #3ef0a8, #2ac887);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: bounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.les-eyes {
+/* Layer 1 – Royal blue shirt */
+.jv-shirt {
   position: absolute;
-  top: 18px;
-  left: 50%;
+  bottom: 0; left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 28px;
-  z-index: 10;
+  width: 140px; height: 64px;
+  background: linear-gradient(150deg, #4a6ef0 0%, #3056c8 55%, #1e42b0 100%);
+  border-radius: 26px 26px 0 0;
+  z-index: 1;
 }
-
-.les-eye {
-  width: 14px;
-  height: 18px;
-  background: #000;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-}
-
-.les-pupil {
-  width: 9px;
-  height: 9px;
-  background: #fff;
-  border-radius: 50%;
+.jv-shirt::before {
+  content: '';
   position: absolute;
-  top: 3px;
-  left: 2.5px;
-  animation: lookAround 4s ease-in-out infinite;
-}
-
-@keyframes lookAround {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(2px, 2px); }
-  50% { transform: translate(-2px, 0); }
-  75% { transform: translate(2px, -2px); }
-}
-
-.les-mouth {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
+  top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 28px;
-  height: 14px;
-  border: 2px solid #000;
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  animation: smile 3s ease-in-out infinite;
+  width: 0; height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 18px solid #f5f0e8;
 }
 
-@keyframes smile {
-  0%, 100% { transform: translateX(-50%) scaleY(1); }
-  50% { transform: translateX(-50%) scaleY(1.2); }
-}
-
-.les-arms {
+/* Layer 2 – Afro */
+.jv-afro {
   position: absolute;
-  top: 35px;
-  left: -5px;
-  right: -5px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 8px;
+  top: 0; left: 3px;
+  width: 154px; height: 144px;
+  background: radial-gradient(circle at 38% 32%, #2e2e2e 0%, #0d0d0d 52%, #010101 100%);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Layer 3 – Ears & neck */
+.jv-ear {
+  position: absolute;
+  width: 17px; height: 24px;
+  background: linear-gradient(90deg, #b06828 0%, #c27030 60%, #a05e20 100%);
+  border-radius: 50%;
+  top: 94px; z-index: 3;
+}
+.jv-ear::after {
+  content: '';
+  position: absolute;
+  top: 4px; left: 3px;
+  width: 9px; height: 14px;
+  background: #8a4e1a;
+  border-radius: 50%; opacity: 0.5;
+}
+.jv-ear-l { left: 12px; }
+.jv-ear-r { right: 12px; }
+
+.jv-neck {
+  position: absolute;
+  width: 22px; height: 30px;
+  top: 148px; left: 50%;
+  transform: translateX(-50%);
+  background: #b86828;
+  border-radius: 4px 4px 5px 5px;
+  z-index: 3;
+}
+
+/* Layer 4 – Paisley bandana (knot in back) */
+.jv-bandana-wrap {
+  position: absolute;
+  top: 150px; left: 50%;
+  transform: translateX(-50%);
+  width: 56px; height: 15px;
+  border-radius: 8px;
+  z-index: 4;
+  background:
+    radial-gradient(ellipse 3px 5px at  8px  5px, rgba(140,200,255,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 4px at 16px  3px, rgba(140,200,255,0.40) 0%, transparent 100%),
+    radial-gradient(ellipse 3px 5px at 26px  7px, rgba(140,200,255,0.50) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 4px at 38px  4px, rgba(140,200,255,0.42) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 4px at 48px  6px, rgba(140,200,255,0.38) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 3px at 13px 11px, rgba(140,200,255,0.32) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 3px at 34px 11px, rgba(140,200,255,0.28) 0%, transparent 100%),
+    #1535a0;
+}
+.jv-bandana-fold {
+  position: absolute;
+  top: 162px; left: 50%;
+  transform: translateX(-50%);
+  width: 40px; height: 22px;
+  clip-path: polygon(4% 0%, 96% 0%, 50% 100%);
+  z-index: 4;
+  background:
+    radial-gradient(ellipse 2px 4px at 10px  6px, rgba(140,200,255,0.48) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 3px at 22px  4px, rgba(140,200,255,0.36) 0%, transparent 100%),
+    radial-gradient(ellipse 2px 4px at 31px  9px, rgba(140,200,255,0.40) 0%, transparent 100%),
+    #1535a0;
+}
+
+/* Layer 5 – Face */
+.jv-face {
+  position: absolute;
+  width: 84px; height: 88px;
+  top: 70px; left: 38px;
+  background: linear-gradient(150deg, #d09040 0%, #c07030 55%, #a86020 100%);
+  border-radius: 50%;
   z-index: 5;
 }
 
-.les-arm {
-  width: 10px;
-  height: 28px;
-  background: linear-gradient(to right, #3ef0a8, #2ac887);
-  border-radius: 5px;
-  transform-origin: top center;
-  animation: wave 1.2s ease-in-out infinite;
+/* Eyebrows – furrowed, serious */
+.jv-brow {
+  position: absolute;
+  width: 21px; height: 4px;
+  background: #160800;
+  border-radius: 2px;
+  top: 18px;
+}
+.jv-brow-l { left: 9px;  transform: rotate(-7deg); }
+.jv-brow-r { right: 9px; transform: rotate( 7deg); }
+
+/* Eyes – dark almond shape, LARGE white pupil dots */
+.jv-eye {
+  position: absolute;
+  width: 16px; height: 18px;
+  background: #0a0500;
+  border-radius: 50%;
+  top: 26px;
+  overflow: hidden;
+}
+/* Pupil – big white circle, gentle look-around drift */
+.jv-eye::after {
+  content: '';
+  position: absolute;
+  width: 11px; height: 11px;
+  background: #ffffff;
+  border-radius: 50%;
+  top: 3px;
+  left: 2.5px;
+  animation: jv-look 5s ease-in-out infinite;
+}
+@keyframes jv-look {
+  0%, 100% { transform: translate(0, 0);    }
+  20%       { transform: translate(2px, 1px); }
+  45%       { transform: translate(-2px, 0); }
+  70%       { transform: translate(1px, -1px); }
+}
+.jv-eye-l { left: 11px; }
+.jv-eye-r { right: 11px; }
+
+/* Nose */
+.jv-nose {
+  position: absolute;
+  width: 14px; height: 8px;
+  border-radius: 50%;
+  background: #a05c20;
+  top: 50px; left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.65;
 }
 
-.les-arm:first-child {
-  animation-delay: 0s;
+/* Mouth */
+.jv-mouth {
+  position: absolute;
+  width: 26px; height: 5px;
+  background: linear-gradient(
+    to bottom,
+    #9a3d20 0px, #9a3d20 2px,
+    #f0ece6 2px, #f0ece6 7px,
+    #1a0804 7px, #1a0804 100%
+  );
+  border-radius: 14px;
+  top: 63px; left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  transition: height 0.16s ease;
+}
+@keyframes jv-talk {
+  0%,  100% { height: 5px;  border-radius: 14px; }
+  28%        { height: 14px; border-radius: 9px 9px 11px 11px; }
+  52%        { height: 6px;  border-radius: 14px; }
+  76%        { height: 17px; border-radius: 9px 9px 13px 13px; }
+}
+.jv-mouth.talking {
+  animation: jv-talk 0.46s ease-in-out infinite;
+  transition: none;
 }
 
-.les-arm:last-child {
-  animation-delay: 0.2s;
+/* Widget text & buttons */
+.java-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); text-align: center;
+  margin-bottom: 8px;
 }
-
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-25deg); }
+.java-tip {
+  font-size: 0.83rem; color: var(--text);
+  line-height: 1.55; min-height: 56px;
+  margin-bottom: 12px;
+  transition: opacity 0.22s ease, transform 0.24s ease;
 }
+.java-tip.fading { opacity: 0; transform: translateY(-5px); }
 
-.les-tip {
-  font-size: 0.85rem;
-  color: var(--text);
-  line-height: 1.5;
-  margin-bottom: 14px;
-  min-height: 50px;
-}
-
-.les-controls {
-  display: flex;
-  gap: 8px;
-}
-
-.les-btn {
+.java-btns { display: flex; gap: 8px; }
+.java-btn {
   flex: 1;
   background: linear-gradient(135deg, var(--blue), #2a6fd5);
-  border: none;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border: none; color: #fff;
+  padding: 8px 10px;
+  border-radius: 6px; font-size: 0.73rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease;
 }
+.java-btn:hover  { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,163,255,0.35); }
+.java-btn:active { transform: translateY(0); }
 
-.les-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 163, 255, 0.3);
-}
-
-.les-btn:active {
-  transform: translateY(0);
-}
-
-/* Responsive */
+/* ─── RESPONSIVE ─────────────────────────── */
 @media (max-width: 900px) {
-  .lab-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .les {
-    bottom: 20px;
-    right: 20px;
-    max-width: 240px;
-  }
+  .lab-content { grid-template-columns: 1fr; }
+  .java-widget, .java-show-btn { bottom: 20px; right: 20px; }
+  .java-widget { width: 220px; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
   <div class="header">
     <div class="header-content">
       <h1>✨ CSS Layout Lab</h1>
-      <div class="subtitle">Watch Flexbox come alive — change values, see magic happen</div>
+      <div class="subtitle">Watch Flexbox &amp; Grid come alive — change values, see magic happen</div>
     </div>
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active">Flexbox</button>
-    <button class="tab-btn" disabled>Grid (coming soon)</button>
+    <button class="tab-btn active" data-tab="flexbox" onclick="switchTab('flexbox')">Flexbox</button>
+    <button class="tab-btn"        data-tab="grid"    onclick="switchTab('grid')">Grid</button>
   </div>
 
   <div class="lab-content">
-    
-    <!-- Preview -->
+
     <div class="preview-section">
       <div class="preview-label">Live Preview</div>
       <div class="preview-container" id="preview">
         <div class="preview-item">1</div>
         <div class="preview-item">2</div>
         <div class="preview-item">3</div>
+        <div class="preview-item">4</div>
+        <div class="preview-item">5</div>
+        <div class="preview-item">6</div>
       </div>
     </div>
 
-    <!-- Controls -->
-    <div class="controls">
+    <!-- ─── FLEX CONTROLS ─── -->
+    <div class="controls" id="flex-controls">
       <div class="control-group">
         <label class="control-label">flex-direction</label>
         <select id="direction">
@@ -476,7 +482,6 @@ select:hover, input[type="range"]:hover {
           <option value="column-reverse">column-reverse</option>
         </select>
       </div>
-
       <div class="control-group">
         <label class="control-label">justify-content</label>
         <select id="justify">
@@ -488,7 +493,6 @@ select:hover, input[type="range"]:hover {
           <option value="space-evenly">space-evenly</option>
         </select>
       </div>
-
       <div class="control-group">
         <label class="control-label">align-items</label>
         <select id="align">
@@ -499,13 +503,11 @@ select:hover, input[type="range"]:hover {
           <option value="baseline">baseline</option>
         </select>
       </div>
-
       <div class="control-group">
         <label class="control-label">gap</label>
-        <input type="range" id="gap" min="0" max="40" value="10" />
+        <input type="range" id="gap" min="0" max="40" value="10"/>
         <div class="range-value"><span id="gapValue">10</span>px</div>
       </div>
-
       <div class="control-group">
         <label class="control-label">flex-wrap</label>
         <select id="wrap">
@@ -516,184 +518,342 @@ select:hover, input[type="range"]:hover {
       </div>
     </div>
 
+    <!-- ─── GRID CONTROLS ─── -->
+    <div class="controls" id="grid-controls" style="display:none">
+      <div class="control-group">
+        <label class="control-label">grid-template-columns</label>
+        <select id="gridCols">
+          <option value="repeat(2, 1fr)">repeat(2, 1fr)</option>
+          <option value="repeat(3, 1fr)" selected>repeat(3, 1fr)</option>
+          <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+          <option value="1fr 2fr">1fr 2fr</option>
+          <option value="2fr 1fr 1fr">2fr 1fr 1fr</option>
+          <option value="100px 1fr">100px 1fr</option>
+          <option value="repeat(auto-fit, minmax(80px, 1fr))">auto-fit minmax(80, 1fr)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">grid-template-rows</label>
+        <select id="gridRows">
+          <option value="auto" selected>auto</option>
+          <option value="80px">80px</option>
+          <option value="repeat(2, 80px)">repeat(2, 80px)</option>
+          <option value="1fr 1fr">1fr 1fr</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">justify-items</label>
+        <select id="gridJustify">
+          <option value="stretch" selected>stretch</option>
+          <option value="start">start</option>
+          <option value="center">center</option>
+          <option value="end">end</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">align-items</label>
+        <select id="gridAlign">
+          <option value="stretch" selected>stretch</option>
+          <option value="start">start</option>
+          <option value="center">center</option>
+          <option value="end">end</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">gap</label>
+        <input type="range" id="gridGap" min="0" max="40" value="10"/>
+        <div class="range-value"><span id="gridGapValue">10</span>px</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Code -->
   <div class="code-section">
     <div class="code-label">
       <span>.container {</span>
       <button class="copy-btn" onclick="copyCode()">Copy CSS</button>
     </div>
     <div class="code-output" id="codeOutput"></div>
-    <div style="color: var(--muted); font-family: monospace; font-size: 0.85rem; margin-top: 8px;">}</div>
+    <div style="color:var(--muted);font-family:'Space Mono',monospace;font-size:0.85rem;margin-top:8px;">}</div>
   </div>
 
 </div>
 
-<!-- Les the mascot -->
-<div class="les" id="les">
-  <div class="les-character">
-    <div class="les-symbol">&lt;</div>
-    <div class="les-eyes">
-      <div class="les-eye">
-        <div class="les-pupil"></div>
-      </div>
-      <div class="les-eye">
-        <div class="les-pupil"></div>
+
+<!-- ════════════════════════════════
+     JAVA — help mascot
+     ════════════════════════════════ -->
+<div class="java-widget" id="java-widget">
+
+  <div class="java-char-area">
+    <div class="java-char">
+      <div class="jv-shirt"></div>
+      <div class="jv-afro"></div>
+      <div class="jv-ear jv-ear-l"></div>
+      <div class="jv-ear jv-ear-r"></div>
+      <div class="jv-neck"></div>
+      <div class="jv-bandana-wrap"></div>
+      <div class="jv-bandana-fold"></div>
+      <div class="jv-face">
+        <div class="jv-brow jv-brow-l"></div>
+        <div class="jv-brow jv-brow-r"></div>
+        <div class="jv-eye  jv-eye-l"></div>
+        <div class="jv-eye  jv-eye-r"></div>
+        <div class="jv-nose"></div>
+        <div class="jv-mouth" id="java-mouth"></div>
       </div>
     </div>
-    <div class="les-mouth"></div>
-    <div class="les-arms">
-      <div class="les-arm"></div>
-      <div class="les-arm"></div>
-    </div>
   </div>
-  <div class="les-tip" id="lesTip">I'm Les! Change the properties on the right to see how Flexbox works.</div>
-  <div class="les-controls">
-    <button class="les-btn" onclick="nextTip()">Next tip</button>
-    <button class="les-btn" onclick="muteLes()">Mute</button>
+
+  <div class="java-label">☕ Java</div>
+  <div class="java-tip" id="java-tip">Adjust the controls and watch the tiles move in real time!</div>
+  <div class="java-btns">
+    <button class="java-btn" onclick="nextTip()">Next tip ›</button>
+    <button class="java-btn" onclick="muteJava()">Hide</button>
   </div>
+
 </div>
+
+<button class="java-show-btn" id="java-show-btn" onclick="showJava()" title="Show Java">☕</button>
+
 
 <script>
 
-const tips = [
-  "I'm Les! Change the properties on the right to see how Flexbox works.",
-  "flex-direction controls if items stack horizontally (row) or vertically (column).",
-  "justify-content aligns items along the main axis (left-right for row, top-bottom for column).",
-  "align-items aligns items along the cross axis (opposite of main axis).",
-  "gap adds spacing between items. No need for margins!",
-  "flex-wrap lets items wrap to the next line if they don't fit.",
-  "Combine these 5 properties to build almost any layout.",
+/* ─── TIPS (every B-word swapped for a synonym) ── */
+const flexTips = [
+  'Adjust the controls and watch the tiles move in real time!',
+  'flex-direction: row lines items left-to-right. column stacks them vertically.',
+  'justify-content moves items on the main axis. Try space-between for even gaps.',
+  'align-items controls the cross axis — stretch fills the container height automatically.',
+  'gap is cleaner than margin. It only adds space among items, not on the outer edges.',
+  'flex-wrap: wrap lets items spill to a new row instead of squishing together.',
+  "Master these 5 properties and you can craft almost any layout you'll ever need."
 ]
 
-let currentTipIndex = 0
+const gridTips = [
+  'Grid is 2D — rows AND columns at once. Flexbox only handles one axis.',
+  'grid-template-columns defines your vertical tracks. Try repeat(3, 1fr) for three even slices.',
+  '1fr means "one fraction of the available space." Resize the window and watch it adapt.',
+  'repeat(auto-fit, minmax(80px, 1fr)) creates a responsive grid with zero media queries.',
+  'justify-items aligns items inside their grid slot horizontally; align-items does it vertically.',
+  'gap works the same way in Grid — tidy spacing among rows AND columns at once.',
+  'Use Grid for whole-page layouts; reach for Flexbox when aligning a single row or stack.'
+]
 
-// State
+let tipIndex  = 0
+let talkTimer = null
+let autoTimer = null
+
+/* ─── LAB STATE ────────────────────────────── */
 const state = {
-  direction: 'row',
-  justify: 'flex-start',
-  align: 'stretch',
-  gap: 10,
-  wrap: 'nowrap',
+  activeTab   : 'flexbox',
+  /* flex */
+  direction   : 'row',
+  justify     : 'flex-start',
+  align       : 'stretch',
+  gap         : 10,
+  wrap        : 'nowrap',
+  /* grid */
+  gridCols    : 'repeat(3, 1fr)',
+  gridRows    : 'auto',
+  gridJustify : 'stretch',
+  gridAlign   : 'stretch',
+  gridGap     : 10,
 }
 
-// Get elements
-const preview = document.getElementById('preview')
-const codeOutput = document.getElementById('codeOutput')
-const lesTip = document.getElementById('lesTip')
-const les = document.getElementById('les')
+/* ─── DOM REFS ─────────────────────────────── */
+const preview      = document.getElementById('preview')
+const codeOutput   = document.getElementById('codeOutput')
+const javaTip      = document.getElementById('java-tip')
+const javaMouth    = document.getElementById('java-mouth')
+const javaWidget   = document.getElementById('java-widget')
+const javaShowBtn  = document.getElementById('java-show-btn')
+const flexControls = document.getElementById('flex-controls')
+const gridControls = document.getElementById('grid-controls')
 
-// Load saved state
-function loadState() {
-  const saved = localStorage.getItem('flexbox-lab-state')
-  if (saved) {
-    Object.assign(state, JSON.parse(saved))
-    updateControls()
-  }
-  
-  const lesMuted = localStorage.getItem('les-muted')
-  if (lesMuted === 'true') {
-    les.classList.add('hidden')
-  }
-}
-
-// Save state
+/* ─── PERSIST STATE ────────────────────────── */
 function saveState() {
-  localStorage.setItem('flexbox-lab-state', JSON.stringify(state))
+  try { localStorage.setItem('layout-lab-state', JSON.stringify(state)) } catch(e) {}
+}
+function loadState() {
+  try {
+    const saved = localStorage.getItem('layout-lab-state')
+    if (saved) Object.assign(state, JSON.parse(saved))
+  } catch(e) {}
+  if (localStorage.getItem('java-muted') === 'true') {
+    javaWidget.classList.add('hidden')
+    javaShowBtn.style.display = 'block'
+  }
+}
+function syncControls() {
+  document.getElementById('direction').value       = state.direction
+  document.getElementById('justify').value         = state.justify
+  document.getElementById('align').value           = state.align
+  document.getElementById('gap').value             = state.gap
+  document.getElementById('gapValue').textContent  = state.gap
+  document.getElementById('wrap').value            = state.wrap
+  document.getElementById('gridCols').value           = state.gridCols
+  document.getElementById('gridRows').value           = state.gridRows
+  document.getElementById('gridJustify').value        = state.gridJustify
+  document.getElementById('gridAlign').value          = state.gridAlign
+  document.getElementById('gridGap').value            = state.gridGap
+  document.getElementById('gridGapValue').textContent = state.gridGap
 }
 
-// Update controls to match state
-function updateControls() {
-  document.getElementById('direction').value = state.direction
-  document.getElementById('justify').value = state.justify
-  document.getElementById('align').value = state.align
-  document.getElementById('gap').value = state.gap
-  document.getElementById('gapValue').textContent = state.gap
-  document.getElementById('wrap').value = state.wrap
+/* ─── TAB SWITCH ───────────────────────────── */
+function switchTab(tab) {
+  state.activeTab = tab
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab)
+  })
+  flexControls.style.display = tab === 'flexbox' ? '' : 'none'
+  gridControls.style.display = tab === 'grid'    ? '' : 'none'
+  render()
+  tipIndex = 0
+  showTip(0)
+  clearInterval(autoTimer)
+  startAutoTips()
 }
 
-// Event listeners
-document.getElementById('direction').addEventListener('change', (e) => {
-  state.direction = e.target.value
-  render()
-})
-
-document.getElementById('justify').addEventListener('change', (e) => {
-  state.justify = e.target.value
-  render()
-})
-
-document.getElementById('align').addEventListener('change', (e) => {
-  state.align = e.target.value
-  render()
-})
-
-document.getElementById('gap').addEventListener('input', (e) => {
+/* ─── FLEX LISTENERS ───────────────────────── */
+document.getElementById('direction').addEventListener('change', e => { state.direction = e.target.value; render() })
+document.getElementById('justify').addEventListener('change',   e => { state.justify   = e.target.value; render() })
+document.getElementById('align').addEventListener('change',     e => { state.align     = e.target.value; render() })
+document.getElementById('gap').addEventListener('input',        e => {
   state.gap = e.target.value
   document.getElementById('gapValue').textContent = state.gap
   render()
 })
+document.getElementById('wrap').addEventListener('change', e => { state.wrap = e.target.value; render() })
 
-document.getElementById('wrap').addEventListener('change', (e) => {
-  state.wrap = e.target.value
+/* ─── GRID LISTENERS ───────────────────────── */
+document.getElementById('gridCols').addEventListener('change',    e => { state.gridCols    = e.target.value; render() })
+document.getElementById('gridRows').addEventListener('change',    e => { state.gridRows    = e.target.value; render() })
+document.getElementById('gridJustify').addEventListener('change', e => { state.gridJustify = e.target.value; render() })
+document.getElementById('gridAlign').addEventListener('change',   e => { state.gridAlign   = e.target.value; render() })
+document.getElementById('gridGap').addEventListener('input',      e => {
+  state.gridGap = e.target.value
+  document.getElementById('gridGapValue').textContent = state.gridGap
   render()
 })
 
-// Main render
+/* ─── RENDER ───────────────────────────────── */
 function render() {
   saveState()
-  
-  // Update preview
-  preview.style.flexDirection = state.direction
-  preview.style.justifyContent = state.justify
-  preview.style.alignItems = state.align
-  preview.style.gap = state.gap + 'px'
-  preview.style.flexWrap = state.wrap
-  
-  // Update code
+  if (state.activeTab === 'flexbox') {
+    preview.style.display             = 'flex'
+    preview.style.flexDirection       = state.direction
+    preview.style.justifyContent      = state.justify
+    preview.style.alignItems          = state.align
+    preview.style.gap                 = state.gap + 'px'
+    preview.style.flexWrap            = state.wrap
+    preview.style.gridTemplateColumns = ''
+    preview.style.gridTemplateRows    = ''
+    preview.style.justifyItems        = ''
+  } else {
+    preview.style.display             = 'grid'
+    preview.style.gridTemplateColumns = state.gridCols
+    preview.style.gridTemplateRows    = state.gridRows
+    preview.style.justifyItems        = state.gridJustify
+    preview.style.alignItems          = state.gridAlign
+    preview.style.gap                 = state.gridGap + 'px'
+    preview.style.flexDirection       = ''
+    preview.style.justifyContent      = ''
+    preview.style.flexWrap            = ''
+  }
   updateCode()
 }
 
-// Update code output
 function updateCode() {
-  const code = `display: flex;
-flex-direction: ${state.direction};
-justify-content: ${state.justify};
-align-items: ${state.align};
-gap: ${state.gap}px;
-flex-wrap: ${state.wrap};`
-  
-  codeOutput.textContent = code
+  if (state.activeTab === 'flexbox') {
+    codeOutput.textContent =
+      `display: flex;\nflex-direction: ${state.direction};\njustify-content: ${state.justify};\nalign-items: ${state.align};\ngap: ${state.gap}px;\nflex-wrap: ${state.wrap};`
+  } else {
+    codeOutput.textContent =
+      `display: grid;\ngrid-template-columns: ${state.gridCols};\ngrid-template-rows: ${state.gridRows};\njustify-items: ${state.gridJustify};\nalign-items: ${state.gridAlign};\ngap: ${state.gridGap}px;`
+  }
 }
 
-// Copy code to clipboard
+/* ─── COPY CODE ────────────────────────────── */
 function copyCode() {
-  const code = codeOutput.textContent
-  navigator.clipboard.writeText(code).then(() => {
-    const btn = event.target
-    const original = btn.textContent
-    btn.textContent = 'Copied ✓'
-    setTimeout(() => btn.textContent = original, 2000)
-  })
+  const text = codeOutput.textContent
+  const btn  = document.querySelector('.copy-btn')
+  const done = () => {
+    btn.textContent = '✓ Copied!'
+    setTimeout(() => btn.textContent = 'Copy CSS', 2000)
+  }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done))
+  } else {
+    fallbackCopy(text, done)
+  }
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea')
+  ta.value = text
+  ta.style.cssText = 'position:fixed;opacity:0'
+  document.body.appendChild(ta)
+  ta.select()
+  try { document.execCommand('copy'); cb() } catch(e) {}
+  document.body.removeChild(ta)
 }
 
-// Les controls
+/* ─── JAVA: TIPS ───────────────────────────── */
+function getTips() {
+  return state.activeTab === 'grid' ? gridTips : flexTips
+}
+function showTip(i) {
+  const tips = getTips()
+  if (!tips[i]) i = 0
+  clearTimeout(talkTimer)
+  javaMouth.classList.add('talking')
+  talkTimer = setTimeout(() => javaMouth.classList.remove('talking'), 2500)
+  javaTip.classList.add('fading')
+  setTimeout(() => {
+    javaTip.textContent = tips[i]
+    javaTip.classList.remove('fading')
+  }, 230)
+}
 function nextTip() {
-  currentTipIndex = (currentTipIndex + 1) % tips.length
-  lesTip.textContent = tips[currentTipIndex]
+  const tips = getTips()
+  tipIndex = (tipIndex + 1) % tips.length
+  showTip(tipIndex)
+  clearInterval(autoTimer)
+  startAutoTips()
+}
+function startAutoTips() {
+  autoTimer = setInterval(() => {
+    const tips = getTips()
+    tipIndex = (tipIndex + 1) % tips.length
+    showTip(tipIndex)
+  }, 8000)
 }
 
-function muteLes() {
-  les.classList.add('hidden')
-  localStorage.setItem('les-muted', 'true')
+/* ─── JAVA: HIDE / SHOW ────────────────────── */
+function muteJava() {
+  javaWidget.classList.add('hidden')
+  javaShowBtn.style.display = 'block'
+  try { localStorage.setItem('java-muted', 'true') } catch(e) {}
+}
+function showJava() {
+  javaWidget.classList.remove('hidden')
+  javaShowBtn.style.display = 'none'
+  try { localStorage.setItem('java-muted', 'false') } catch(e) {}
 }
 
-// Init
+/* ─── INIT ─────────────────────────────────── */
 loadState()
+syncControls()
+const initTab = state.activeTab || 'flexbox'
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.classList.toggle('active', btn.dataset.tab === initTab)
+})
+flexControls.style.display = initTab === 'flexbox' ? '' : 'none'
+gridControls.style.display = initTab === 'grid'    ? '' : 'none'
 render()
+startAutoTips()
+setTimeout(() => showTip(0), 1200)
 
 </script>
-
 </body>
 </html>
