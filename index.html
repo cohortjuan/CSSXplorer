@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSS Layout Lab — Flexbox</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0b1020;
+  --card: #121a2a;
+  --text: #eaf1ff;
+  --muted: #7f8aa3;
+  --blue: #4aa3ff;
+  --green: #3ef0a8;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  margin-bottom: 60px;
+  background: linear-gradient(135deg, #1e4bd8 0%, #121a2a 100%);
+  border-radius: 20px;
+  padding: 60px 40px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #3b6ef5;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(58, 110, 245, 0.2), transparent);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 3.2rem;
+  margin-bottom: 12px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #eaf1ff, #3ef0a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: rgba(234, 241, 255, 0.8);
+  font-size: 1.1rem;
+  font-weight: 500;
+  max-width: 500px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #1e2a44;
+  padding-bottom: 16px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+/* Main layout */
+.lab-content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Preview */
+.preview-section {
+  background: var(--card);
+  border: 1px solid #1e2a44;
+  border-radius: 12px;
+  padding: 40px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+.preview-container {
+  flex: 1;
+  background: #0f1626;
+  border: 2px dashed #2a3a5a;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  /* flex properties applied dynamically */
+}
+
+.preview-item {
+  background: var(--green);
+  color: #000;
+  padding: 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Controls */
+.controls {
+  background: var(--card);
+  border: 1px solid #1e2a44;
+  border-radius: 12px;
+  padding: 24px;
+  height: fit-content;
+}
+
+.control-group {
+  margin-bottom: 24px;
+}
+
+.control-group:last-child {
+  margin-bottom: 0;
+}
+
+.control-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 600;
+}
+
+select, input[type="range"] {
+  width: 100%;
+  padding: 8px 12px;
+  background: #0f1626;
+  border: 1px solid #2a3a5a;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+select:hover, input[type="range"]:hover {
+  border-color: var(--blue);
+}
+
+.range-value {
+  font-size: 0.8rem;
+  color: var(--blue);
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* Code output */
+.code-section {
+  background: var(--card);
+  border: 1px solid #1e2a44;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.code-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-btn {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  opacity: 0.8;
+}
+
+.code-output {
+  background: #0f1626;
+  border: 1px solid #2a3a5a;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--green);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Les mascot */
+.les {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: var(--card);
+  border: 3px solid var(--blue);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 280px;
+  z-index: 100;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(74, 163, 255, 0.2);
+}
+
+.les.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.les-character {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+  height: 120px;
+  perspective: 1000px;
+}
+
+.les-symbol {
+  font-size: 5.5rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #3ef0a8, #2ac887);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: bounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.les-eyes {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 28px;
+  z-index: 10;
+}
+
+.les-eye {
+  width: 14px;
+  height: 18px;
+  background: #000;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.les-pupil {
+  width: 9px;
+  height: 9px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 2.5px;
+  animation: lookAround 4s ease-in-out infinite;
+}
+
+@keyframes lookAround {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(2px, 2px); }
+  50% { transform: translate(-2px, 0); }
+  75% { transform: translate(2px, -2px); }
+}
+
+.les-mouth {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  border: 2px solid #000;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  animation: smile 3s ease-in-out infinite;
+}
+
+@keyframes smile {
+  0%, 100% { transform: translateX(-50%) scaleY(1); }
+  50% { transform: translateX(-50%) scaleY(1.2); }
+}
+
+.les-arms {
+  position: absolute;
+  top: 35px;
+  left: -5px;
+  right: -5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 5;
+}
+
+.les-arm {
+  width: 10px;
+  height: 28px;
+  background: linear-gradient(to right, #3ef0a8, #2ac887);
+  border-radius: 5px;
+  transform-origin: top center;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.les-arm:first-child {
+  animation-delay: 0s;
+}
+
+.les-arm:last-child {
+  animation-delay: 0.2s;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-25deg); }
+}
+
+.les-tip {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  min-height: 50px;
+}
+
+.les-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.les-btn {
+  flex: 1;
+  background: linear-gradient(135deg, var(--blue), #2a6fd5);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.les-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 163, 255, 0.3);
+}
+
+.les-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .lab-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .les {
+    bottom: 20px;
+    right: 20px;
+    max-width: 240px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-content">
+      <h1>✨ CSS Layout Lab</h1>
+      <div class="subtitle">Watch Flexbox come alive — change values, see magic happen</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active">Flexbox</button>
+    <button class="tab-btn" disabled>Grid (coming soon)</button>
+  </div>
+
+  <div class="lab-content">
+    
+    <!-- Preview -->
+    <div class="preview-section">
+      <div class="preview-label">Live Preview</div>
+      <div class="preview-container" id="preview">
+        <div class="preview-item">1</div>
+        <div class="preview-item">2</div>
+        <div class="preview-item">3</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="control-group">
+        <label class="control-label">flex-direction</label>
+        <select id="direction">
+          <option value="row">row</option>
+          <option value="column">column</option>
+          <option value="row-reverse">row-reverse</option>
+          <option value="column-reverse">column-reverse</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">justify-content</label>
+        <select id="justify">
+          <option value="flex-start">flex-start</option>
+          <option value="center">center</option>
+          <option value="flex-end">flex-end</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="space-evenly">space-evenly</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">align-items</label>
+        <select id="align">
+          <option value="stretch">stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="center">center</option>
+          <option value="flex-end">flex-end</option>
+          <option value="baseline">baseline</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">gap</label>
+        <input type="range" id="gap" min="0" max="40" value="10" />
+        <div class="range-value"><span id="gapValue">10</span>px</div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">flex-wrap</label>
+        <select id="wrap">
+          <option value="nowrap">nowrap</option>
+          <option value="wrap">wrap</option>
+          <option value="wrap-reverse">wrap-reverse</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Code -->
+  <div class="code-section">
+    <div class="code-label">
+      <span>.container {</span>
+      <button class="copy-btn" onclick="copyCode()">Copy CSS</button>
+    </div>
+    <div class="code-output" id="codeOutput"></div>
+    <div style="color: var(--muted); font-family: monospace; font-size: 0.85rem; margin-top: 8px;">}</div>
+  </div>
+
+</div>
+
+<!-- Les the mascot -->
+<div class="les" id="les">
+  <div class="les-character">
+    <div class="les-symbol">&lt;</div>
+    <div class="les-eyes">
+      <div class="les-eye">
+        <div class="les-pupil"></div>
+      </div>
+      <div class="les-eye">
+        <div class="les-pupil"></div>
+      </div>
+    </div>
+    <div class="les-mouth"></div>
+    <div class="les-arms">
+      <div class="les-arm"></div>
+      <div class="les-arm"></div>
+    </div>
+  </div>
+  <div class="les-tip" id="lesTip">I'm Les! Change the properties on the right to see how Flexbox works.</div>
+  <div class="les-controls">
+    <button class="les-btn" onclick="nextTip()">Next tip</button>
+    <button class="les-btn" onclick="muteLes()">Mute</button>
+  </div>
+</div>
+
+<script>
+
+const tips = [
+  "I'm Les! Change the properties on the right to see how Flexbox works.",
+  "flex-direction controls if items stack horizontally (row) or vertically (column).",
+  "justify-content aligns items along the main axis (left-right for row, top-bottom for column).",
+  "align-items aligns items along the cross axis (opposite of main axis).",
+  "gap adds spacing between items. No need for margins!",
+  "flex-wrap lets items wrap to the next line if they don't fit.",
+  "Combine these 5 properties to build almost any layout.",
+]
+
+let currentTipIndex = 0
+
+// State
+const state = {
+  direction: 'row',
+  justify: 'flex-start',
+  align: 'stretch',
+  gap: 10,
+  wrap: 'nowrap',
+}
+
+// Get elements
+const preview = document.getElementById('preview')
+const codeOutput = document.getElementById('codeOutput')
+const lesTip = document.getElementById('lesTip')
+const les = document.getElementById('les')
+
+// Load saved state
+function loadState() {
+  const saved = localStorage.getItem('flexbox-lab-state')
+  if (saved) {
+    Object.assign(state, JSON.parse(saved))
+    updateControls()
+  }
+  
+  const lesMuted = localStorage.getItem('les-muted')
+  if (lesMuted === 'true') {
+    les.classList.add('hidden')
+  }
+}
+
+// Save state
+function saveState() {
+  localStorage.setItem('flexbox-lab-state', JSON.stringify(state))
+}
+
+// Update controls to match state
+function updateControls() {
+  document.getElementById('direction').value = state.direction
+  document.getElementById('justify').value = state.justify
+  document.getElementById('align').value = state.align
+  document.getElementById('gap').value = state.gap
+  document.getElementById('gapValue').textContent = state.gap
+  document.getElementById('wrap').value = state.wrap
+}
+
+// Event listeners
+document.getElementById('direction').addEventListener('change', (e) => {
+  state.direction = e.target.value
+  render()
+})
+
+document.getElementById('justify').addEventListener('change', (e) => {
+  state.justify = e.target.value
+  render()
+})
+
+document.getElementById('align').addEventListener('change', (e) => {
+  state.align = e.target.value
+  render()
+})
+
+document.getElementById('gap').addEventListener('input', (e) => {
+  state.gap = e.target.value
+  document.getElementById('gapValue').textContent = state.gap
+  render()
+})
+
+document.getElementById('wrap').addEventListener('change', (e) => {
+  state.wrap = e.target.value
+  render()
+})
+
+// Main render
+function render() {
+  saveState()
+  
+  // Update preview
+  preview.style.flexDirection = state.direction
+  preview.style.justifyContent = state.justify
+  preview.style.alignItems = state.align
+  preview.style.gap = state.gap + 'px'
+  preview.style.flexWrap = state.wrap
+  
+  // Update code
+  updateCode()
+}
+
+// Update code output
+function updateCode() {
+  const code = `display: flex;
+flex-direction: ${state.direction};
+justify-content: ${state.justify};
+align-items: ${state.align};
+gap: ${state.gap}px;
+flex-wrap: ${state.wrap};`
+  
+  codeOutput.textContent = code
+}
+
+// Copy code to clipboard
+function copyCode() {
+  const code = codeOutput.textContent
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.target
+    const original = btn.textContent
+    btn.textContent = 'Copied ✓'
+    setTimeout(() => btn.textContent = original, 2000)
+  })
+}
+
+// Les controls
+function nextTip() {
+  currentTipIndex = (currentTipIndex + 1) % tips.length
+  lesTip.textContent = tips[currentTipIndex]
+}
+
+function muteLes() {
+  les.classList.add('hidden')
+  localStorage.setItem('les-muted', 'true')
+}
+
+// Init
+loadState()
+render()
+
+</script>
+
+</body>
+</html>
