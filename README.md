@@ -1,5 +1,7 @@
 # CSS Layout Lab
 
+https://cohortjuan.github.io/CSSXplorer/
+
 An interactive Flexbox & Grid explorer — **change properties, see the layout update instantly**. Built for learning CSS layout through hands-on experimentation.
 
 ## What is this?
